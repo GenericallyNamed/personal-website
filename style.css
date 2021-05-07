@@ -1,6 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@keyframes textEmerge {
+    from {transform:translateY(-75px); opacity:0;}
+    to {transform:translateY(0px); opacity:1;}
+}
+@keyframes textEmerge2 {
+    from {transform:translateY(-50px); opacity:0;}
+    to {transform:translateY(0px); opacity:1;}
+}
+@keyframes textEmerge3 {
+    from {transform:translateY(-35px); opacity:0;}
+    to {transform:translateY(0px); opacity:1;}
+}
+@keyframes textEmerge4 {
+    from {transform:translateY(-15px); opacity:0;}
+    to {transform:translateY(0px); opacity:1;}
+}
+@keyframes ripple {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+@keyframes zoom {
+    from { transform:scale(1);}
+    to { transform:scale(0.8);}
+}
+
+@keyframes bottomBarReveal {
+    from {height:0%;} 
+    to {height:10%; }
+}
+
+.addRippleBtn {
+    overflow:hidden;
+}
 
 
+.rippleEffect {
+    opacity:0.8;
+    position:absolute;
+    border-radius:100%;
+    animation: ripple 1.5s;
+    animation-fill-mode: both;
+    animation-timing-function:cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.rippleEnd {
+    opacity:0;
+    transition:0.5s ease;
+}
+
+.zoomCard {
+    animation: zoom 2s;
+    animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.bottombar-option {
+    height:-webkit-fill-available;
+    transition:0.5s ease;
+    width:100%;
+    background-color:pink;
+}
+
+#bottombar {
+    /*animation: bottomBarReveal 2s;
+    animation-delay:3s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    animation-fill-mode: forwards;*/
+    position:absolute;
+    bottom:0px;
+    width:-webkit-fill-available;
+    height:30%;
+    background-color:rgb(70, 70, 70);
+    border-color:white;
+    border-width:0px;
+    border-style: solid;
+    margin:0;
+    background-color:none;
+    border-radius:0px;
+    display:flex;
+    flex-direction:column;
+    place-content:center;
+    text-align:-webkit-left;
+    font-family:'Archivo';
+    font-weight:400;
+    font-size:400%;
+    overflow:hidden;
+    color:rgb(255, 255, 255);
+
+}
+
+
+.bottombar-section {
+    width:-webkit-fill-available;
+    height:100%;
+    display:flex;
+    transition: 0.5s ease;
+}
+
+.bottombar-section-expanded {
+    width:500%;
+    transition: 0.5s ease;
+}
+
+
+#bottomHoverHint {
+    background-color:red;
+    transition:0.5s ease;
+}
 
 #landing {
     justify-items:center;
@@ -8,14 +113,113 @@
     align-items:center;
     align-content:center;
     text-align:center;
-    padding-top:10vh
+    padding:0;
+    width:90%;
+    transform:scale(0.8);
+    height:90%;
+    background-color: rgb(202, 48, 1);
+    /*background: url(Iridescence.jpg);*/
+    /*background: rgb(218,218,218);*/
+    /*background: linear-gradient(135deg, rgba(218,218,218,1) 0%, rgba(237,237,237,1) 31%, rgba(213,213,213,1) 76%, rgba(255,255,255,1) 100%);*/
+    animation: zoom 2s;
+    animation-delay:3s;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation-fill-mode:backwards;
 }
 
 #title {
-    margin-left:auto;
+    z-index:2;
+    opacity:0;
+    animation:textEmerge 2s;
+    animation-delay:0.1s;
+    animation-fill-mode:forwards;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    margin-left:15px;
     margin-right:auto;
-    margin: top 20vh;
+    margin-top: 20vh;
     font-size:500%;
-    font-family:'Roboto';
+    font-family:'Archivo Black';
+    color:rgb(255, 255, 255);
     font-weight:900;
+}
+
+#subtitle {
+    z-index:2;
+    color:rgb(255, 255, 255);
+    opacity:0;
+    margin-left:15px;
+    margin-right:auto;
+    font-size:300%;
+    font-family:'Archivo Black';
+    font-weight:600;
+    animation-delay:4s;
+    animation:textEmerge2 4s;
+    animation-fill-mode:forwards;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+#subtitle2 {
+    z-index:2;
+    color:rgb(255, 255, 255);
+    opacity:0;
+    margin-left:15px;
+    margin-right:auto;
+    font-size:200%;
+    font-family:'Archivo Black';
+    font-weight:500;
+    animation-delay:4s;
+    animation:textEmerge3 6s;
+    animation-fill-mode:forwards;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.cardGradient {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    background: rgb(200,51,5);
+    background: linear-gradient(0deg, rgba(200,51,5,1) 0%, rgba(200,51,5,1) 20%, rgba(200,51,5,0.2) 100%);
+}
+
+#subtitle3 {
+    z-index:2;
+    color:rgb(255, 255, 255);
+    opacity:0;
+    margin-left:15px;
+    margin-right:auto;
+    font-size:100%;
+    font-family:'Archivo Black';
+    font-weight:400;
+    animation-delay:4s;
+    animation:textEmerge4 8s;
+    animation-fill-mode:forwards;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+
+#intro {
+    display:flex;
+    flex-direction:column;
+}
+
+#landingOptions {
+    display:flex;
+    flex-direction:row;
+}
+
+#projectsBtn {
+    line-height:100%;
+    width:80px;
+    height:30px;
+    background:transparent;
+    border-radius:5px;
+    border-width:1px;
+    border-style:solid;
+    border-color:red;
+    font-family:'Archivo Black';
+    align-content: center;
+    font-weight:400;
+    color:red;
 }

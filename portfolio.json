@@ -1,0 +1,50 @@
+{
+    "landing":[],
+    "experiences":[
+        {"TMS2":{
+            "type":"minecraft map",
+            "title":"The Missing Sandwich II",
+            "discription":"",
+            "display":true,
+            "tags":["",""]
+        }},
+        {"AG":{
+            "type":"minecraft map",
+            "title":"Annoying Ghosts",
+            "discription":"",
+            "display":true,
+            "tags":["",""]
+        }},
+        {"PF":{
+            "type":"web app",
+            "title":"",
+            "discription":"",
+            "display":true,
+            "tags":["",""]
+        }},
+        {"Calc":{
+            "type":"web app",
+            "title":"Calculator 2",
+            "discription":"",
+            "display":true,
+            "tags":["",""]
+        }}
+    ],
+    "skills":[
+        {"JavaScript":{
+            "level":"Beginner",
+            "description":""
+        }},
+        {"HTML":{
+            "level":"Beginner",
+            "description":""
+        }},
+        {"CSS":{
+            "level":"Beginner",
+            "description":""
+        }},
+        {"UI/UX":{
+            "level":"Beginner"
+        }}
+    ]
+}

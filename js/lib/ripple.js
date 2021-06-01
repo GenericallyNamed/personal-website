@@ -71,27 +71,7 @@ function endRipple2(event, btn, ripple) {
 }
 
 
-function endRipple3(btn, ripple) {
-    let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
-    for(var i = 0; i < eventListeners.length; i++) {
-        btn.ripple = ripple;
-        btn.addEventListener(eventListeners[i], function removingRipple(event, ripple) {
-            if(btn.ripple.rippleStatus == "active") {
-                let rippleParent = btn;
-                rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
-                btn.ripple.rippleStatus = "remove";
-                btn.ripple.classList.add('rippleEnd');
-                setTimeout(removeRippleObject, 2000, btn.ripple);
-                btn.ripple.parentElement.parentElement.touchFiring = false;
-                //event.stopPropagation();
-            }
-            
-            for(var i = 0; i < eventListeners.length; i++) {
-                btn.removeEventListener(eventListeners[i], removingRipple);
-            }
-        }, { once: true });
-    }
-}
+
 
 function endRipple4(btn, ripple) {
     if(ripple.rippleStatus == "active") {
@@ -129,7 +109,7 @@ for (var i = 0; i < rippleBtns.length; i++) {
         });
         
     }
-    let endEventListeners = ["touchcancel","touchend","mouseleave","mouseup","mouseout","contextmenu"];
+    let endEventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
     for(var j = 0; j < endEventListeners.length; j++) {
         currentElement.addEventListener(endEventListeners[j], function(event) {
             if(this.rippleActive == true) {

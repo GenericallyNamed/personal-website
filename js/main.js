@@ -30,8 +30,19 @@ updateWindow();
 enterBtn.addEventListener("click",function(){
   enterSite();
 });
-enterBtn.addEventListener("touchend",function(){
-  enterSite();
+enterBtn.addEventListener("touchstart",function(event){
+  window.targetX = event.touches[0].clientX;
+  window.targetY = event.touches[0].clientY;
+  console.log(window.targetX + ", " + window.targetY);
+});
+enterBtn.addEventListener("touchend",function(event){
+  var distanceX = event.changedTouches[0].clientX - window.targetX;
+  var distanceY = event.changedTouches[0].clientY - window.targetY;
+  var distance = Math.sqrt((Math.pow(distanceX,2)) + (Math.pow(distanceY,2)));
+  console.log(distance);
+  if(distance < 10) {
+    enterSite();
+  }
 });
 
 function enterSite() {

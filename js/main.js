@@ -40,7 +40,7 @@ enterBtn.addEventListener("touchend",function(event){
   var distanceY = event.changedTouches[0].clientY - window.targetY;
   var distance = Math.sqrt((Math.pow(distanceX,2)) + (Math.pow(distanceY,2)));
   console.log(distance);
-  if(distance < 10) {
+  if(distance < 20) {
     enterSite();
   }
 });

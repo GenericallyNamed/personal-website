@@ -47,31 +47,14 @@ function ripple(id, rgb) {
     rippleObject.style.backgroundColor = rgb;
     rippleObject.style.zIndex = 1;
     rippleObject.classList.add("rippleEffect"); 
+    rippleObject.targetX = x;
+    rippleObject.targetY = y;
     let rippleParent = rippleContainer.parentElement;
     rippleParent.style.boxShadow = "0px 3px 10px 2px rgba(0,0,0,0.3)";
     let object = rippleObject;
     rippleObject.rippleStatus = "active";
-    //endRipple(rippleObject);
-    //e.stopPropagation();
     return rippleObject;
 }
-function endRipple2(event, btn, ripple) {
-    if(ripple.rippleStatus == "active") {
-        let rippleParent = this.parentElement.parentElement;
-        rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
-        ripple.rippleStatus = "remove";
-        ripple.classList.add('rippleEnd');
-        setTimeout(removeRippleObject, 2000, this);
-        btn.touchFiring = false;
-        let eventListeners = ["touchcancel","touchend","mouseleave","mouseup","mouseout","contextmenu"];
-        for(var i = 0; i < eventListeners.length; i++) {
-            btn.removeEventListener(eventListeners[i], endRipple2)
-        }
-    }
-}
-
-
-
 
 function endRipple4(btn, ripple) {
     if(ripple.rippleStatus == "active") {
@@ -83,7 +66,6 @@ function endRipple4(btn, ripple) {
         btn.ripple.parentElement.parentElement.touchFiring = false;
     }
 }
-
 
 for (var i = 0; i < rippleBtns.length; i++) {
     var currentElement = rippleBtns[i];
@@ -112,9 +94,19 @@ for (var i = 0; i < rippleBtns.length; i++) {
     let endEventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
     for(var j = 0; j < endEventListeners.length; j++) {
         currentElement.addEventListener(endEventListeners[j], function(event) {
-            if(this.rippleActive == true) {
-                endRipple4(this, this.ripple);
+            if(event.type == "touchmove") {
+                let distanceX = event.touches[0].clientX - this.ripple.targetX;
+                let distanceY = event.touches[0].clientY - this.ripple.targetY;
+                let distance = Math.sqrt((Math.pow(distanceX,2)) + (Math.pow(distanceY,2)));
+                if(distance > 20 && this.rippleActive == true) {
+                    endRipple4(this, this.ripple);
+                }
+            } else {
+                if(this.rippleActive == true) {
+                    endRipple4(this, this.ripple);
+                }
             }
+            
         });
     }
 }

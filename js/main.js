@@ -30,6 +30,9 @@ updateWindow();
 enterBtn.addEventListener("click",function(){
   enterSite();
 });
+enterBtn.addEventListener("touchend",function(){
+  enterSite();
+});
 
 function enterSite() {
   let cover = document.getElementById("cover");

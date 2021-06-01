@@ -58,7 +58,7 @@ function ripple(id, rgb) {
 
 
 function endRipple(elem) {
-    let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
+    let eventListeners = ["touchcancel","touchend","mouseleave","mouseup","mouseout","contextmenu"];
     for(var i = 0; i < eventListeners.length; i++) {
         elem.parentElement.parentElement.addEventListener(eventListeners[i], function(event){
 
@@ -80,16 +80,6 @@ function endRipple2(event, btn, ripple) {
     }
 }
 
-function help(event, btn, ripple) {
-    if(this.rippleStatus == "active") {
-        let rippleParent = this.parentElement.parentElement;
-        rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
-        this.rippleStatus = "remove";
-        this.classList.add('rippleEnd');
-        setTimeout(removeRippleObject, 2000, this);
-        this.parentElement.parentElement.touchFiring = false;
-    }
-}
 
 function endRipple3(btn, ripple) {
     let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];

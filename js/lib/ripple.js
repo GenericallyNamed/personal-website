@@ -31,9 +31,10 @@ function ripple(id, rgb) {
     rippleContainer.appendChild(rippleObject); //Appends the ripple object to the ripple container
     rippleObject.style.position = "relative"; //Set the position style of the ripple object to RELATIVE
     var parentObject = rippleObject.parentElement; //Get the parent of the ripple object.
-    var x = e.clientX - parentObject.getBoundingClientRect().left;  //First get the RELATIVE x position of the mouse within the container by taking the mouse x-value
+    var x = ((e.clientX == undefined) ? e.touches[0].clientX : e.clientX) - parentObject.getBoundingClientRect().left;
+    //var x = e.clientX - parentObject.getBoundingClientRect().left;  //First get the RELATIVE x position of the mouse within the container by taking the mouse x-value
                                                                     //and subtracting the parent element's distance from the left
-    var y = e.clientY - parentObject.getBoundingClientRect().top;   //First get the RELATIVE y position of the mouse within the container by taking the mouse y-value
+    var y = ((e.clientY == undefined) ? e.touches[0].clientY : e.clientY) - parentObject.getBoundingClientRect().top;   //First get the RELATIVE y position of the mouse within the container by taking the mouse y-value
                                                                     //and subtracting the parent element's distance from the top
     rippleObject.style.width = (rippleSize*2) + "px";
     rippleObject.style.height = (rippleSize*2) + "px";
@@ -49,6 +50,7 @@ function ripple(id, rgb) {
     rippleParent.style.boxShadow = "0px 3px 10px 2px rgba(0,0,0,0.3)";
     let object = rippleObject;
     rippleObject.rippleStatus = "active";
+    e.preventDefault();
     endRipple(rippleObject);
     return;
 }
@@ -57,16 +59,18 @@ function ripple(id, rgb) {
 function endRipple(elem) {
     let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
     for(var i = 0; i < eventListeners.length; i++) {
-        elem.addEventListener(eventListeners[i], function() {
+        elem.addEventListener(eventListeners[i], function(event) {
             if(this.rippleStatus == "active") {
-                let rippleParent = this.parentElement;
+                let rippleParent = this.parentElement.parentElement;
                 rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
                 this.rippleStatus = "remove";
                 this.classList.add('rippleEnd');
-                setTimeout(function() { //This setTimeout ensures that the fade-out animation on the ripple object will be allowed to run before the actual ripple 
+                setTimeout(removeRippleObject, 2000, this);
+                //setTimeout(function() { //This setTimeout ensures that the fade-out animation on the ripple object will be allowed to run before the actual ripple 
                                         //object is deleted after 2 seconds.
-                    this.remove();
-                }, 2000);
+                    //this.remove();
+                //}, 2000, this);
+                event.preventDefault();
             }
         })
     }
@@ -78,15 +82,15 @@ for (var i = 0; i < rippleBtns.length; i++) {
     var currentElement = rippleBtns[i];
     let eventListeners = ["touchstart","mousedown"];
     for(var j = 0; j < eventListeners.length; j++) {
-        currentElement.addEventListener(eventListeners[j], function() {
+        currentElement.addEventListener(eventListeners[j], function(event) {
             var color = this.getAttribute("rippleColor");
             var nameID = this.getAttribute("id");
             ripple(nameID, color);    
+            //event.preventDefault();
         })
     }
-    // currentElement.addEventListener('mousedown', function() {
-    //     var color = this.getAttribute("rippleColor");
-    //     var nameID = this.getAttribute("id");
-    //     ripple(nameID, color);
-    // })
+}
+
+function removeRippleObject(obj) {
+    obj.parentElement.remove();
 }

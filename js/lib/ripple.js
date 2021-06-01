@@ -55,16 +55,6 @@ function ripple(id, rgb) {
     //e.stopPropagation();
     return rippleObject;
 }
-
-
-function endRipple(elem) {
-    let eventListeners = ["touchcancel","touchend","mouseleave","mouseup","mouseout","contextmenu"];
-    for(var i = 0; i < eventListeners.length; i++) {
-        elem.parentElement.parentElement.addEventListener(eventListeners[i], function(event){
-
-        });
-    }
-}
 function endRipple2(event, btn, ripple) {
     if(ripple.rippleStatus == "active") {
         let rippleParent = this.parentElement.parentElement;
@@ -73,7 +63,7 @@ function endRipple2(event, btn, ripple) {
         ripple.classList.add('rippleEnd');
         setTimeout(removeRippleObject, 2000, this);
         btn.touchFiring = false;
-        let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
+        let eventListeners = ["touchcancel","touchend","mouseleave","mouseup","mouseout","contextmenu"];
         for(var i = 0; i < eventListeners.length; i++) {
             btn.removeEventListener(eventListeners[i], endRipple2)
         }
@@ -139,7 +129,7 @@ for (var i = 0; i < rippleBtns.length; i++) {
         });
         
     }
-    let endEventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
+    let endEventListeners = ["touchcancel","touchend","mouseleave","mouseup","mouseout","contextmenu"];
     for(var j = 0; j < endEventListeners.length; j++) {
         currentElement.addEventListener(endEventListeners[j], function(event) {
             if(this.rippleActive == true) {

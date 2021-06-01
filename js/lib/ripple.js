@@ -138,7 +138,7 @@ for (var i = 0; i < rippleBtns.length; i++) {
                 this.touchFiring = true;
                 rippleElement = ripple(nameID, color);
             } else {
-                if(this.touchFiring = false) {
+                if(this.touchFiring != true) {
                     rippleElement = ripple(nameID, color);
                 }
             }

@@ -1,7 +1,7 @@
 //const UAParser = require("./lib/ua-parser");
 
-var window_height,
-    window_width,
+var window_height = window.innerHeight,
+    window_width = window.innerWidth,
     isPortrait = window_height > window_width,
     getDeviceType = () => {
       const ua = navigator.userAgent;
@@ -19,8 +19,13 @@ var window_height,
       }
       return "desktop";
   },
-  enterBtn = document.getElementById("enterBtn");
+  enterBtn = document.getElementById("enterBtn"),
+  landing = document.getElementById("landing");
 
+window.addEventListener("resize", function() {
+  updateWindow();
+});
+updateWindow();
 
 enterBtn.addEventListener("click",function(){
   enterSite();
@@ -62,3 +67,8 @@ function enterSite() {
 //   event.stopPropagation();
 //   return false;
 // };
+
+function updateWindow() {
+  landing.style.height = window.innerHeight + "px";
+  landing.style.width = window.innerWidth + "px";
+}

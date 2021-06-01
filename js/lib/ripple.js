@@ -95,8 +95,8 @@ for (var i = 0; i < rippleBtns.length; i++) {
     for(var j = 0; j < endEventListeners.length; j++) {
         currentElement.addEventListener(endEventListeners[j], function(event) {
             if(event.type == "touchmove") {
-                let distanceX = event.touches[0].clientX - this.ripple.targetX;
-                let distanceY = event.touches[0].clientY - this.ripple.targetY;
+                let distanceX = event.touches[0].screenX - this.ripple.targetX;
+                let distanceY = event.touches[0].screenY - this.ripple.targetY;
                 let distance = Math.sqrt((Math.pow(distanceX,2)) + (Math.pow(distanceY,2)));
                 if(distance > 20 && this.rippleActive == true) {
                     endRipple4(this, this.ripple);

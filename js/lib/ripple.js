@@ -15,7 +15,8 @@ var rippleBtns = document.getElementsByClassName("addRippleBtn");
  * @param {String} rgb 
  * @purpose This method creates the ripple effect seen on buttons.
  */
-function ripple(id, rgb) {    
+function ripple(id, rgb) {
+    console.log('ripple created');
     var elem = document.getElementById(id);
     elem.style.overflow = "hidden"; //This is to ensure that the parent element of the ripple hides the overflow of the ripple object.
     var e = window.event; //stores window.event in var "e"
@@ -50,32 +51,78 @@ function ripple(id, rgb) {
     rippleParent.style.boxShadow = "0px 3px 10px 2px rgba(0,0,0,0.3)";
     let object = rippleObject;
     rippleObject.rippleStatus = "active";
-    e.preventDefault();
-    endRipple(rippleObject);
-    return;
+    //endRipple(rippleObject);
+    //e.stopPropagation();
+    return rippleObject;
 }
 
 
 function endRipple(elem) {
     let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
     for(var i = 0; i < eventListeners.length; i++) {
-        elem.addEventListener(eventListeners[i], function(event) {
-            if(this.rippleStatus == "active") {
-                let rippleParent = this.parentElement.parentElement;
-                rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
-                this.rippleStatus = "remove";
-                this.classList.add('rippleEnd');
-                setTimeout(removeRippleObject, 2000, this);
-                //setTimeout(function() { //This setTimeout ensures that the fade-out animation on the ripple object will be allowed to run before the actual ripple 
-                                        //object is deleted after 2 seconds.
-                    //this.remove();
-                //}, 2000, this);
-                event.preventDefault();
-            }
-        })
+        elem.parentElement.parentElement.addEventListener(eventListeners[i], function(event){
+
+        });
+    }
+}
+function endRipple2(event, btn, ripple) {
+    if(ripple.rippleStatus == "active") {
+        let rippleParent = this.parentElement.parentElement;
+        rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
+        ripple.rippleStatus = "remove";
+        ripple.classList.add('rippleEnd');
+        setTimeout(removeRippleObject, 2000, this);
+        btn.touchFiring = false;
+        let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
+        for(var i = 0; i < eventListeners.length; i++) {
+            btn.removeEventListener(eventListeners[i], endRipple2)
+        }
     }
 }
 
+function help(event, btn, ripple) {
+    if(this.rippleStatus == "active") {
+        let rippleParent = this.parentElement.parentElement;
+        rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
+        this.rippleStatus = "remove";
+        this.classList.add('rippleEnd');
+        setTimeout(removeRippleObject, 2000, this);
+        this.parentElement.parentElement.touchFiring = false;
+    }
+}
+
+function endRipple3(btn, ripple) {
+    let eventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
+    for(var i = 0; i < eventListeners.length; i++) {
+        btn.ripple = ripple;
+        btn.addEventListener(eventListeners[i], function removingRipple(event, ripple) {
+            if(btn.ripple.rippleStatus == "active") {
+                let rippleParent = btn;
+                rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
+                btn.ripple.rippleStatus = "remove";
+                btn.ripple.classList.add('rippleEnd');
+                setTimeout(removeRippleObject, 2000, btn.ripple);
+                btn.ripple.parentElement.parentElement.touchFiring = false;
+                //event.stopPropagation();
+            }
+            
+            for(var i = 0; i < eventListeners.length; i++) {
+                btn.removeEventListener(eventListeners[i], removingRipple);
+            }
+        }, { once: true });
+    }
+}
+
+function endRipple4(btn, ripple) {
+    if(ripple.rippleStatus == "active") {
+        let rippleParent = btn;
+        rippleParent.style.boxShadow = "0px 0px 5px 2px rgba(0,0,0,0)";
+        btn.ripple.rippleStatus = "remove";
+        btn.ripple.classList.add('rippleEnd');
+        setTimeout(removeRippleObject, 2000, btn.ripple);
+        btn.ripple.parentElement.parentElement.touchFiring = false;
+    }
+}
 
 
 for (var i = 0; i < rippleBtns.length; i++) {
@@ -83,11 +130,32 @@ for (var i = 0; i < rippleBtns.length; i++) {
     let eventListeners = ["touchstart","mousedown"];
     for(var j = 0; j < eventListeners.length; j++) {
         currentElement.addEventListener(eventListeners[j], function(event) {
+            this.rippleActive = true;
             var color = this.getAttribute("rippleColor");
             var nameID = this.getAttribute("id");
-            ripple(nameID, color);    
-            //event.preventDefault();
-        })
+            var rippleElement
+            if(event.type == "touchstart") {
+                this.touchFiring = true;
+                rippleElement = ripple(nameID, color);
+            } else {
+                if(this.touchFiring = false) {
+                    rippleElement = ripple(nameID, color);
+                }
+            }
+            this.ripple = rippleElement
+            event.preventDefault();
+            //endRipple3(this, rippleElement);
+            return false;
+        });
+        
+    }
+    let endEventListeners = ["touchcancel","touchend","touchmove","mouseleave","mouseup","mouseout","contextmenu"];
+    for(var j = 0; j < endEventListeners.length; j++) {
+        currentElement.addEventListener(endEventListeners[j], function(event) {
+            if(this.rippleActive == true) {
+                endRipple4(this, this.ripple);
+            }
+        });
     }
 }
 

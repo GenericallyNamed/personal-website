@@ -34,6 +34,8 @@ enterBtn.addEventListener("click",function(){
 function enterSite() {
   let cover = document.getElementById("cover");
   let landing = document.getElementById("landing");
+  cover.style.height = window.innerHeight + "px";
+  cover.style.width = window.innerWidth + "px";
   cover.style.display = "block";
   cover.style.transition = "0.5s ease";
   cover.style.animation = "fade-out 0.5s ease";

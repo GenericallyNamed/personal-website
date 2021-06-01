@@ -24,8 +24,6 @@ body {
 }
 
 #cover {
-    width:100vw;
-    height:90vh;
     position:absolute;
     transition:0.5s ease;
     background-color:white;

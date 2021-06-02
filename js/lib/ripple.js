@@ -47,8 +47,8 @@ function ripple(id, rgb) {
     rippleObject.style.backgroundColor = rgb;
     rippleObject.style.zIndex = 1;
     rippleObject.classList.add("rippleEffect"); 
-    rippleObject.targetX = e.screenX;
-    rippleObject.targetY = e.screenY;
+    rippleObject.targetX = e.touches[0].screenX;
+    rippleObject.targetY = e.touches[0].screenY;
     let rippleParent = rippleContainer.parentElement;
     rippleParent.style.boxShadow = "0px 3px 10px 2px rgba(0,0,0,0.3)";
     let object = rippleObject;
